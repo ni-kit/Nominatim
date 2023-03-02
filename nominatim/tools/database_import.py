@@ -55,7 +55,8 @@ def setup_database_skeleton(dsn: str, rouser: Optional[str] = None) -> None:
     proc = subprocess.run(['createdb'], env=get_pg_env(dsn), check=False)
 
     if proc.returncode != 0:
-        raise UsageError('Creating new database failed.')
+        LOG.info("Database already exists")
+        #raise UsageError('Creating new database failed.')
 
     with connect(dsn) as conn:
         _require_version('PostgreSQL server',
